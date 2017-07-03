@@ -1,0 +1,35 @@
+{
+	"name": "vbb-journey-ui",
+	"description": "UI component for displaying a journey like in Google Maps.",
+	"version": "0.1.0",
+	"main": "index.js",
+	"files": [
+		"index.js"
+	],
+	"keywords": [
+		"vbb",
+		"bvg",
+		"public transport",
+		"ui",
+		"component",
+		"virtual-dom"
+	],
+	"author": "Jannis R <mail@jannisr.de>",
+	"homepage": "https://github.com/derhuerst/vbb-journey-ui",
+	"repository": "derhuerst/vbb-journey-ui",
+	"bugs": "https://github.com/derhuerst/vbb-journey-ui/issues",
+	"license": "ISC",
+	"engines": {
+		"node": ">=6"
+	},
+	"dependencies": {
+	},
+	"devDependencies": {
+		"tape": "^4.6.3",
+		"tap-min": "^1.2.1"
+	},
+	"scripts": {
+		"test": "node test.js | tap-min",
+		"prepublishOnly": "npm test"
+	}
+}
