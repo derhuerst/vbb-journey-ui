@@ -17,9 +17,36 @@ npm install vbb-journey-ui
 
 ## Usage
 
+`renderJourney` returns a [virtual-dom](https://github.com/Matt-Esch/virtual-dom) tree, which you can put into the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction) or convert to an HTML string.
+
 ```js
-todo
+const vbb = require('vbb-client')
+const renderJourney = require('vbb-journey-ui')
+const toString = require('virtual-dom-stringify')
+
+vbb.journeys('900000003201', '900000024101', {results: 1})
+.then((journeys) => {
+	const tree = renderJourney(journeys[0])
+	console.log(toString(tree))
+})
+.catch(console.error)
 ```
+
+## API
+
+```
+renderJourney(journey, [detailsFor], [actions])
+```
+
+The structure of `journey` must follow the [*Friendly Public Transport Format*](https://github.com/public-transport/friendly-public-transport-format).
+
+`detailsFor` may be an array of `journey.parts` indices that additional info like passed stations shall be shown for.
+
+`actions` may be an object with the following methods:
+
+- `actions.hidePartDetails(i)`
+- `actions.showPartDetails(i)`
+- `actions.selectStation(id)`
 
 
 ## Contributing
