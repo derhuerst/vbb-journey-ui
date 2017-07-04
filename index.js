@@ -10,10 +10,10 @@ const prefix = require('./lib/styles')
 const renderMode = (part, i, details, actions) => {
 	if (part.mode === 'walking') {
 		const t = new Date(part.arrival) - new Date(part.departure)
-		const s = Number.isNaN(t) ? 'walk' : 'walk for ' + ms(t)
+		const s = Number.isNaN(t) ? '🚶 walk' : '🚶 walk for ' + ms(t)
 		// todo: distance
 		return h('li', {
-			className: prefix + ' part',
+			className: prefix + ' part walking',
 			style: {borderLeftColor: '#999'}
 		}, [
 			h('div', {
@@ -45,12 +45,12 @@ const renderLine = (part, i, details, actions) => {
 	const passed = []
 	if (details) {
 		for (let stopover of part.passed.slice(1, -1)) {
-			passed.push(h('li', {}, renderStation(stopover.station, actions)))
+			passed.push(h('li', {}, renderPassed(stopover.station, actions, color.bg)))
 		}
 	}
 
 	const l = part.passed.length
-	const label = (l - 1) + ' ' + (l === 2 ? 'station' : 'stations')
+	const label = (l - 1) + ' ' + (l === 2 ? 'stop' : 'stops')
 
 	const nrOfPassed = part.passed ? h('span', {
 		className: prefix + ' link',
@@ -81,11 +81,18 @@ const renderLine = (part, i, details, actions) => {
 			', ',
 			nrOfPassed,
 		]),
-		h('div', {
+		passed.length > 0 ? h('div', {
 			className: prefix + ' details'
-		}, passed)
+		}, passed) : null
 	])
 }
+
+const renderPassed = (station, actions, color) =>
+	h('div', {
+		className: prefix + ' link passed',
+		style: {borderBottomColor: color},
+		'ev-click': () => actions.selectStation(station.id)
+	}, station.name)
 
 const renderStation = (station, actions) =>
 	h('div', {

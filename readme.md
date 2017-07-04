@@ -7,6 +7,8 @@
 ![ISC-licensed](https://img.shields.io/github/license/derhuerst/vbb-journey-ui.svg)
 [![chat on gitter](https://badges.gitter.im/derhuerst.svg)](https://gitter.im/derhuerst)
 
+![screenshot of vbb-journey-ui](screenshot.png)
+
 
 ## Installing
 
