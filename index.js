@@ -7,11 +7,28 @@ const ms = require('ms')
 
 const prefix = require('./lib/styles')
 
+const renderMode = (part, i, details, actions) => {
+	if (part.mode === 'walking') {
+		const t = new Date(part.arrival) - new Date(part.departure)
+		const s = Number.isNaN(t) ? 'walk' : 'walk for ' + ms(t)
+		// todo: distance
+		return h('li', {
+			className: prefix + ' part',
+			style: {borderLeftColor: '#999'}
+		}, [
+			h('div', {
+				className: prefix + ' details'
+			}, s)
+		])
+	}
+	return renderLine(part, i, details, actions)
+}
+
 const renderLine = (part, i, details, actions) => {
 	const line = part.line
 	let color = {}
 	let symbol = null
-	if (line && line.product) {
+	if (line.product) {
 		symbol = h('img', {
 			className: prefix + ' product',
 			alt: line.product,
@@ -41,7 +58,7 @@ const renderLine = (part, i, details, actions) => {
 	}, label) : null
 
 	return h('li', {
-		className: prefix + ' line',
+		className: prefix + ' part',
 		style: {
 			borderLeftColor: color.bg || '#999'
 		}
@@ -93,7 +110,7 @@ const renderJourney = (journey, detailsFor = [], actions = {}) => {
 		if (i === 0) parts.push(renderStopover(part.origin, actions))
 
 		parts.push(
-			renderLine(part, i, detailsFor.includes(i), actions),
+			renderMode(part, i, detailsFor.includes(i), actions),
 			renderStopover(part.destination, actions)
 		)
 	}

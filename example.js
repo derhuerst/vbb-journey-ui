@@ -5,7 +5,7 @@ const toString = require('virtual-dom-stringify')
 
 const renderJourney = require('.')
 
-vbb.journeys('900000003201', '900000024101', {results: 1, passedStations: true})
+vbb.journeys('900000100001', '900000100013', {results: 1, passedStations: true})
 .then((journeys) => {
 	const tree = renderJourney(journeys[0])
 	console.log(toString(tree))
