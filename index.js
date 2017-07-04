@@ -63,16 +63,16 @@ const renderLine = (part, i, details, actions) => {
 			borderLeftColor: color.bg || '#999'
 		}
 	}, [
-		symbol,
-		h('span', {
-			className: prefix + ' name',
-			style: {
-				backgroundColor: color.bg || '#555',
-				color: color.fg || '#fff'
-			}
-		}, [
-			line.name || '?'
+		h('div', {className: prefix + ' line-container'}, [
+			h('span', {
+				className: prefix + ' line',
+				style: {
+					backgroundColor: color.bg || '#555',
+					color: color.fg || '#fff'
+				}
+			}, line.name || '?'),
 		]),
+		symbol,
 		part.direction ? ' → ' + part.direction : '',
 		h('div', {
 			className: prefix + ' details'
