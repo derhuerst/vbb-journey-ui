@@ -7,13 +7,13 @@ const ms = require('ms')
 
 const prefix = require('./lib/styles')
 
-const renderMode = (part, i, details, actions) => {
-	if (part.mode === 'walking') {
-		const t = new Date(part.arrival) - new Date(part.departure)
+const renderMode = (leg, i, details, actions) => {
+	if (leg.mode === 'walking') {
+		const t = new Date(leg.arrival) - new Date(leg.departure)
 		const s = Number.isNaN(t) ? '🚶 walk' : '🚶 walk for ' + ms(t)
 		// todo: distance
 		return h('li', {
-			className: prefix + ' part walking',
+			className: prefix + ' leg walking',
 			style: {borderLeftColor: '#999'}
 		}, [
 			h('div', {
@@ -21,11 +21,11 @@ const renderMode = (part, i, details, actions) => {
 			}, s)
 		])
 	}
-	return renderLine(part, i, details, actions)
+	return renderLine(leg, i, details, actions)
 }
 
-const renderLine = (part, i, details, actions) => {
-	const line = part.line
+const renderLine = (leg, i, details, actions) => {
+	const line = leg.line
 	let color = {}
 	let symbol = null
 	if (line.product) {
@@ -44,21 +44,21 @@ const renderLine = (part, i, details, actions) => {
 
 	const passed = []
 	if (details) {
-		for (let stopover of part.passed.slice(1, -1)) {
+		for (let stopover of leg.passed.slice(1, -1)) {
 			passed.push(h('li', {}, renderPassed(stopover.station, actions, color.bg)))
 		}
 	}
 
-	const l = part.passed.length
+	const l = leg.passed.length
 	const label = (l - 1) + ' ' + (l === 2 ? 'stop' : 'stops')
 
-	const nrOfPassed = part.passed ? h('span', {
+	const nrOfPassed = leg.passed ? h('span', {
 		className: prefix + ' link',
-		'ev-click': details ? () => actions.hidePartDetails(i) : () => actions.showPartDetails(i)
+		'ev-click': details ? () => actions.hideLegDetails(i) : () => actions.showLegDetails(i)
 	}, label) : null
 
 	return h('li', {
-		className: prefix + ' part',
+		className: prefix + ' leg',
 		style: {
 			borderLeftColor: color.bg || '#999'
 		}
@@ -73,11 +73,11 @@ const renderLine = (part, i, details, actions) => {
 			}, line.name || '?'),
 		]),
 		symbol,
-		part.direction ? ' → ' + part.direction : '',
+		leg.direction ? ' → ' + leg.direction : '',
 		h('div', {
 			className: prefix + ' details'
 		}, [
-			ms(new Date(part.arrival) - new Date(part.departure)),
+			ms(new Date(leg.arrival) - new Date(leg.departure)),
 			', ',
 			nrOfPassed,
 		]),
@@ -110,21 +110,21 @@ const renderStopover = (station, actions) =>
 const renderJourney = (journey, detailsFor = [], actions = {}) => {
 	if (!journey) return null
 
-	const parts = []
-	for (let i = 0; i < journey.parts.length; i++) {
-		const part = journey.parts[i]
+	const legs = []
+	for (let i = 0; i < journey.legs.length; i++) {
+		const leg = journey.legs[i]
 
-		if (i === 0) parts.push(renderStopover(part.origin, actions))
+		if (i === 0) legs.push(renderStopover(leg.origin, actions))
 
-		parts.push(
-			renderMode(part, i, detailsFor.includes(i), actions),
-			renderStopover(part.destination, actions)
+		legs.push(
+			renderMode(leg, i, detailsFor.includes(i), actions),
+			renderStopover(leg.destination, actions)
 		)
 	}
 
 	return h('ul', {
 		className: prefix + ' journey'
-	}, parts)
+	}, legs)
 }
 
 module.exports = renderJourney

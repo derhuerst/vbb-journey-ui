@@ -40,14 +40,14 @@ vbb.journeys('900000003201', '900000024101', {results: 1})
 renderJourney(journey, [detailsFor], [actions])
 ```
 
-The structure of `journey` must follow the [*Friendly Public Transport Format*](https://github.com/public-transport/friendly-public-transport-format).
+`journey` must be a [*Friendly Public Transport Format* `1.0.1` `journey` object](https://github.com/public-transport/friendly-public-transport-format/blob/1.0.1/spec/readme.md#journey).
 
-`detailsFor` may be an array of `journey.parts` indices that additional info like passed stations shall be shown for.
+`detailsFor` may be an array of `journey.legs` indices that additional info like passed stations shall be shown for.
 
 `actions` may be an object with the following methods:
 
-- `actions.hidePartDetails(i)`
-- `actions.showPartDetails(i)`
+- `actions.hideLegDetails(i)`
+- `actions.showLegDetails(i)`
 - `actions.selectStation(id)`
 
 
