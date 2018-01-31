@@ -1,7 +1,7 @@
 {
 	"name": "vbb-journey-ui",
 	"description": "UI component for displaying a journey like in Google Maps.",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"main": "index.js",
 	"files": [
 		"index.js",
@@ -31,8 +31,10 @@
 		"virtual-dom": "^2.1.1"
 	},
 	"devDependencies": {
+		"tap-min": "^1.2.1",
 		"tape": "^4.6.3",
-		"tap-min": "^1.2.1"
+		"vbb-client": "^3.0.1",
+		"virtual-dom-stringify": "^3.0.1"
 	},
 	"scripts": {
 		"test": "node test.js | tap-min",
