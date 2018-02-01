@@ -19,12 +19,14 @@ npm install vbb-journey-ui
 
 ## Usage
 
-`renderJourney` returns a [virtual-dom](https://github.com/Matt-Esch/virtual-dom) tree, which you can put into the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction) or convert to an HTML string.
+`renderJourney` returns a [virtual-dom](https://github.com/Matt-Esch/virtual-dom) tree, which you can put into the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction) or [convert to an HTML string](https://www.npmjs.com/package/virtual-dom-stringify).
 
 ```js
 const vbb = require('vbb-client')
-const renderJourney = require('vbb-journey-ui')
+const createRenderJourney = require('vbb-journey-ui')
 const toString = require('virtual-dom-stringify')
+
+const renderJourney = createRenderJourney({})
 
 vbb.journeys('900000003201', '900000024101', {results: 1})
 .then((journeys) => {
@@ -37,18 +39,21 @@ vbb.journeys('900000003201', '900000024101', {results: 1})
 ## API
 
 ```
-renderJourney(journey, [detailsFor], [actions])
+createRenderJourney([actions]) => renderJourney
+renderJourney(journey, [detailsFor], [actions]) => virtualDomTree
 ```
-
-`journey` must be a [*Friendly Public Transport Format* `1.0.1` `journey` object](https://github.com/public-transport/friendly-public-transport-format/blob/1.0.1/spec/readme.md#journey).
-
-`detailsFor` may be an array of `journey.legs` indices that additional info like passed stations shall be shown for.
 
 `actions` may be an object with the following methods:
 
 - `actions.hideLegDetails(i)`
 - `actions.showLegDetails(i)`
 - `actions.selectStation(id)`
+
+`journey` must be a [*Friendly Public Transport Format* `1.0.1` `journey` object](https://github.com/public-transport/friendly-public-transport-format/blob/1.0.1/spec/readme.md#journey).
+
+`detailsFor` may be an array of `journey.legs` indices that additional info like passed stations shall be shown for.
+
+`renderJourney` returns a [virtual-dom](https://github.com/Matt-Esch/virtual-dom) tree.
 
 
 ## Contributing

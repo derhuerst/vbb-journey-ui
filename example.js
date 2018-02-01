@@ -4,7 +4,9 @@ const h = require('virtual-dom/h')
 const vbb = require('vbb-client')
 const toString = require('virtual-dom-stringify')
 
-const renderJourney = require('.')
+const createRenderJourney = require('.')
+
+const renderJourney = createRenderJourney({})
 
 const css = `\
 body {
