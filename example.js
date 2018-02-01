@@ -1,12 +1,26 @@
 'use strict'
 
+const {DateTime} = require('luxon')
+const ms = require('ms')
 const h = require('virtual-dom/h')
-const vbb = require('vbb-client')
 const toString = require('virtual-dom-stringify')
 
 const createRenderJourney = require('.')
 
-const renderJourney = createRenderJourney({})
+const formatTime = (when) => {
+	return DateTime.fromJSDate(when, {
+		zone: 'Europe/Berlin',
+		locale: 'de-DE'
+	}).toLocaleString(DateTime.TIME_SIMPLE)
+}
+
+const formatDelay = (delay) => {
+	if (delay === 0) return null
+	if (delay < 0) return '-' + ms(-delay * 1000)
+	return '+' + ms(delay * 1000)
+}
+
+const renderJourney = createRenderJourney(formatTime, formatDelay, {})
 
 const css = `\
 body {

@@ -26,11 +26,12 @@
 	"dependencies": {
 		"global": "4.3.2",
 		"insert-styles": "^1.2.1",
-		"ms": "^2.0.0",
+		"ms": "^2.1.1",
 		"vbb-util": "^0.10.1",
 		"virtual-dom": "^2.1.1"
 	},
 	"devDependencies": {
+		"luxon": "^0.4.0",
 		"tap-min": "^1.2.1",
 		"tape": "^4.6.3",
 		"vbb-client": "^3.0.1",

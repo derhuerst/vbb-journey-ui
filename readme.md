@@ -22,11 +22,26 @@ npm install vbb-journey-ui
 `renderJourney` returns a [virtual-dom](https://github.com/Matt-Esch/virtual-dom) tree, which you can put into the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction) or [convert to an HTML string](https://www.npmjs.com/package/virtual-dom-stringify).
 
 ```js
+const {DateTime} = require('luxon')
+const ms = require('ms')
 const vbb = require('vbb-client')
 const createRenderJourney = require('vbb-journey-ui')
 const toString = require('virtual-dom-stringify')
 
-const renderJourney = createRenderJourney({})
+const formatTime = (when) => {
+	return DateTime.fromJSDate(when, {
+		zone: 'Europe/Berlin',
+		locale: 'de-DE'
+	}).toLocaleString(DateTime.TIME_SIMPLE)
+}
+
+const formatDelay = (delay) => {
+	if (delay === 0) return null
+	if (delay < 0) return '-' + ms(-delay * 1000)
+	return '+' + ms(delay * 1000)
+}
+
+const renderJourney = createRenderJourney(formatTime, formatDelay, {})
 
 vbb.journeys('900000003201', '900000024101', {results: 1})
 .then((journeys) => {
@@ -39,9 +54,13 @@ vbb.journeys('900000003201', '900000024101', {results: 1})
 ## API
 
 ```
-createRenderJourney([actions]) => renderJourney
+createRenderJourney(formatTime, formatDelay, [actions]) => renderJourney
 renderJourney(journey, [detailsFor], [actions]) => virtualDomTree
 ```
+
+`formatTime` must be a with the signature `(when: Date) => string`.
+
+`formatDelay` must be a with the signature `(delay: number) => string`.
 
 `actions` may be an object with the following methods:
 

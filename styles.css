@@ -35,6 +35,20 @@
 	color: #666;
 }
 
+.vbb-journey-ui-stopover .vbb-journey-ui-when,
+.vbb-journey-ui-stopover .vbb-journey-ui-delay {
+	padding-left: .25em;
+	display: inline-block;
+	line-height: 1.1em;
+	font-size: 90%;
+}
+.vbb-journey-ui-stopover .vbb-journey-ui-when {
+	color: #777;
+}
+.vbb-journey-ui-stopover .vbb-journey-ui-delay {
+	color: #f39c12;
+}
+
 .vbb-journey-ui-leg {
 	position: relative;
 	margin-left: .5em;

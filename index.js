@@ -7,7 +7,15 @@ const ms = require('ms')
 
 const cls = 'vbb-journey-ui-'
 
-const setup = (actions = {}) => {
+const setup = (formatTime, formatDelay, actions = {}) => {
+	// todo: NOVE_ENV === 'dev'
+	if ('function' !== typeof formatTime) {
+		throw new Error('formatTime must be a function.')
+	}
+	if ('function' !== typeof formatDelay) {
+		throw new Error('formatDelay must be a function.')
+	}
+
 	const renderMode = (leg, i, details) => {
 		if (leg.mode === 'walking') {
 			const t = new Date(leg.arrival) - new Date(leg.departure)
@@ -101,12 +109,33 @@ const setup = (actions = {}) => {
 			'ev-click': () => actions.selectStation(station.id)
 		}, station.name)
 
-	const renderStopover = (station) =>
-		h('li', {
+	const renderStopover = (station, departure, delay) => {
+		const els = [
+			h('div', {
+				className: cls + 'name'
+			}, [renderStation(station)])
+		]
+
+		departure = +new Date(departure)
+		if ('number' === typeof delay) {
+			departure -= delay * 1000
+			els.push(h('div', {
+				className: cls + 'delay'
+			}, [
+				formatDelay(delay)
+			]))
+		}
+		if (departure) {
+			els.splice(1, 0, h('div', {
+				className: cls + 'when'
+			}, [
+				formatTime(new Date(departure))
+			]))
+		}
+		return h('li', {
 			className: cls + 'stopover'
-		}, [
-			renderStation(station)
-		])
+		}, els)
+	}
 
 	const renderJourney = (journey, detailsFor = []) => {
 		if (!journey) return null
@@ -115,12 +144,20 @@ const setup = (actions = {}) => {
 		for (let i = 0; i < journey.legs.length; i++) {
 			const leg = journey.legs[i]
 
-			if (i === 0) legs.push(renderStopover(leg.origin, leg.departure))
-
 			legs.push(
-				renderMode(leg, i, detailsFor.includes(i)),
-				renderStopover(leg.destination)
+				renderStopover(leg.origin, leg.departure, leg.departureDelay),
+				renderMode(leg, i, detailsFor.includes(i))
 			)
+
+			const nextLeg = journey.legs[i + 1]
+			const renderDest = !nextLeg || ( // leg.dest !== nextLeg.origin ?
+				leg.destination &&
+				nextLeg.origin &&
+				nextLeg.origin.id !== leg.destination.id
+			)
+			if (renderDest) {
+				legs.push(renderStopover(leg.destination, leg.arrival, leg.arrivalDelay))
+			}
 		}
 
 		return h('ul', {
