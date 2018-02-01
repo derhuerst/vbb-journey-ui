@@ -7,6 +7,11 @@ const ms = require('ms')
 
 const cls = 'vbb-journey-ui-'
 
+const pedestrians = [
+	'🚶🏻‍♀️', '🚶🏼‍♀️', '🚶🏽‍♀️', '🚶🏾‍♀️', '🚶🏿‍♀️',
+	'🚶🏻‍♂️', '🚶🏼‍♂️', '🚶🏽‍♂️', '🚶🏾‍♂️', '🚶🏿‍♂️'
+]
+
 const setup = (formatTime, formatDelay, actions = {}) => {
 	// todo: NOVE_ENV === 'dev'
 	if ('function' !== typeof formatTime) {
@@ -16,10 +21,13 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 		throw new Error('formatDelay must be a function.')
 	}
 
+	const pedestrian = pedestrians[Math.floor(Math.random() * pedestrians.length)]
+
 	const renderMode = (leg, i, details) => {
 		if (leg.mode === 'walking') {
 			const t = new Date(leg.arrival) - new Date(leg.departure)
-			const s = Number.isNaN(t) ? '🚶 walk' : '🚶 walk for ' + ms(t)
+			const s = [pedestrian, 'walk']
+			if (!Number.isNaN(t)) s.push('for', ms(t, {long: true}))
 			// todo: distance
 			return h('li', {
 				className: cls + 'leg ' + cls + 'walking',
@@ -27,7 +35,7 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 			}, [
 				h('div', {
 					className: cls + 'details'
-				}, s)
+				}, s.join(' '))
 			])
 		}
 		return renderLine(leg, i, details)
@@ -66,6 +74,8 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 			'ev-click': details ? () => actions.hideLegDetails(i) : () => actions.showLegDetails(i)
 		}, label) : null
 
+		const duration = new Date(leg.arrival) - new Date(leg.departure)
+
 		return h('li', {
 			className: cls + 'leg',
 			style: {
@@ -86,7 +96,7 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 			h('div', {
 				className: cls + 'details'
 			}, [
-				ms(new Date(leg.arrival) - new Date(leg.departure)),
+				h('abbr', {title: ms(duration, {long: true})}, [ms(duration)]),
 				', ',
 				nrOfPassed,
 			]),

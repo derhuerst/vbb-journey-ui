@@ -17,14 +17,18 @@ const formatTime = (when) => {
 const formatDelay = (delay) => {
 	if (delay === 0) return null
 	if (delay < 0) return '-' + ms(-delay * 1000)
-	return '+' + ms(delay * 1000)
+	const color = Math.abs(delay) >= 30 ? '#c0392b' : '#27ae60'
+	return h('span', {
+		style: {color}
+	}, ['+' + ms(delay * 1000)])
 }
 
 const renderJourney = createRenderJourney(formatTime, formatDelay, {})
 
 const css = `\
 body {
-	margin: 1rem;
+	max-width: 18rem;
+	margin: 1rem auto;
 	font-size: 100%;
 	font-family: sans-serif;
 	background-color: #fff;
