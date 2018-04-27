@@ -5,6 +5,8 @@ const colors = require('vbb-util/lines/colors')
 const products = require('vbb-util/products')
 const ms = require('ms')
 
+const renderTransferPosition = require('./lib/render-transfer-position')
+
 const cls = 'vbb-journey-ui-'
 
 const pedestrians = [
@@ -76,6 +78,12 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 
 		const duration = new Date(leg.arrival) - new Date(leg.departure)
 
+		const transferPosition = leg.arrivalPosition ? h('div', {
+			className: cls + 'transfer-position'
+		}, [
+			renderTransferPosition(leg.arrivalPosition)
+		]) : null
+
 		return h('li', {
 			className: cls + 'leg',
 			style: {
@@ -99,6 +107,7 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 				h('abbr', {title: ms(duration, {long: true})}, [ms(duration)]),
 				', ',
 				nrOfPassed,
+				transferPosition
 			]),
 			passed.length > 0 ? h('ul', {
 				className: cls + 'details'

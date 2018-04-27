@@ -104,6 +104,16 @@
 	padding-bottom: 0;
 }
 
+.vbb-journey-ui-leg .vbb-journey-ui-transfer-position {
+	display: block;
+	line-height: 1;
+}
+.vbb-journey-ui-leg .vbb-journey-ui-transfer-position svg {
+	margin: 0;
+	width: 100%;
+	max-height: 2em;
+}
+
 .vbb-journey-ui-leg .vbb-journey-ui-details .vbb-journey-ui-passed {
 	position: relative;
 	margin-left: -.25em;
