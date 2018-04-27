@@ -109,7 +109,7 @@
 	line-height: 1;
 }
 .vbb-journey-ui-leg .vbb-journey-ui-transfer-position svg {
-	margin: 0;
+	margin: .1em 0 0 0;
 	width: 100%;
 	max-height: 2em;
 }
