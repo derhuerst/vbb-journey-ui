@@ -6,6 +6,7 @@
 [![build status](https://img.shields.io/travis/derhuerst/vbb-journey-ui.svg)](https://travis-ci.org/derhuerst/vbb-journey-ui)
 ![ISC-licensed](https://img.shields.io/github/license/derhuerst/vbb-journey-ui.svg)
 [![chat on gitter](https://badges.gitter.im/derhuerst.svg)](https://gitter.im/derhuerst)
+[![support me on Patreon](https://img.shields.io/badge/support%20me-on%20patreon-fa7664.svg)](https://patreon.com/derhuerst)
 
 ![screenshot of vbb-journey-ui](screenshot.png)
 
