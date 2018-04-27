@@ -126,16 +126,15 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 			}, [renderStation(station)])
 		]
 
-		departure = +new Date(departure)
 		if ('number' === typeof delay) {
-			departure -= delay * 1000
 			els.push(h('div', {
 				className: cls + 'delay'
 			}, [
 				formatDelay(delay)
 			]))
 		}
-		if (departure) {
+		departure = +new Date(departure)
+		if (!Number.isNaN(departure)) {
 			els.splice(1, 0, h('div', {
 				className: cls + 'when'
 			}, [
