@@ -78,7 +78,7 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 
 		const duration = new Date(leg.arrival) - new Date(leg.departure)
 
-		const transferPosition = leg.arrivalPosition ? h('div', {
+		const transferPosition = details && leg.arrivalPosition ? h('div', {
 			className: cls + 'transfer-position'
 		}, [
 			renderTransferPosition(leg.arrivalPosition)
