@@ -14,6 +14,8 @@ const pedestrians = [
 	'🚶🏻‍♂️', '🚶🏼‍♂️', '🚶🏽‍♂️', '🚶🏾‍♂️', '🚶🏿‍♂️'
 ]
 
+const dirArrow = h('abbr', {title: 'in direction of'}, '→')
+
 const setup = (formatTime, formatDelay, actions = {}) => {
 	// todo: NOVE_ENV === 'dev'
 	if ('function' !== typeof formatTime) {
@@ -100,7 +102,9 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 				}, line.name || '?'),
 			]),
 			symbol,
-			leg.direction ? ' → ' + leg.direction : '',
+			leg.direction ? h('span', {className: cls + 'direction'}, [
+				' ', dirArrow, ' ', leg.direction
+			]) : null,
 			h('div', {
 				className: cls + 'details'
 			}, [

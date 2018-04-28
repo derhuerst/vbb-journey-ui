@@ -67,7 +67,7 @@
 
 .vbb-journey-ui-leg .vbb-journey-ui-line-container {
 	position: absolute;
-	top: .3em;
+	top: .9em;
 	left: 0;
 	margin-left: -1.5em;
 	width: 2.6em;
@@ -86,8 +86,18 @@
 
 .vbb-journey-ui-leg .vbb-journey-ui-product {
 	display: inline-block;
-	width: 1.2em;
-	height: 1.2em;
+	width: 1.9ex;
+	height: 1.9ex;
+	vertical-align: middle;
+}
+.vbb-journey-ui-leg .vbb-journey-ui-product {
+	display: inline-block;
+	width: 2.2ex;
+	height: 2.2ex;
+	vertical-align: middle;
+}
+
+.vbb-journey-ui-leg .vbb-journey-ui-direction {
 	vertical-align: middle;
 }
 
@@ -111,7 +121,7 @@
 .vbb-journey-ui-leg .vbb-journey-ui-transfer-position svg {
 	margin: .1em 0 0 0;
 	width: 100%;
-	max-height: 2em;
+	max-height: 2.2em;
 }
 
 .vbb-journey-ui-leg .vbb-journey-ui-details .vbb-journey-ui-passed {
