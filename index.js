@@ -25,6 +25,12 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 		throw new Error('formatDelay must be a function.')
 	}
 
+	const renderTime = (d) => {
+		return h('time', {
+			datetime: d.toISOString()
+		}, formatTime(d))
+	}
+
 	const pedestrian = pedestrians[Math.floor(Math.random() * pedestrians.length)]
 
 	const renderMode = (leg, i, details) => {
@@ -55,7 +61,7 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 				if (aD < d) d = aD
 			}
 			res = h('span', {}, [
-				'also at ', formatTime(d)
+				'also at ', renderTime(d)
 			])
 		} else if (leg.cycle && 'number' === typeof leg.cycle.min) {
 			const c = leg.cycle
@@ -175,12 +181,12 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 				formatDelay(delay)
 			]))
 		}
-		departure = +new Date(departure)
-		if (!Number.isNaN(departure)) {
+		departure = new Date(departure)
+		if (!Number.isNaN(+departure)) {
 			els.splice(1, 0, h('div', {
 				className: cls + 'when'
 			}, [
-				formatTime(new Date(departure))
+				renderTime(departure)
 			]))
 		}
 		return h('li', {
