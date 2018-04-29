@@ -109,11 +109,14 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 
 		const duration = new Date(leg.arrival) - new Date(leg.departure)
 
-		const transferPosition = details && leg.arrivalPosition ? h('div', {
-			className: cls + 'transfer-position'
-		}, [
-			renderTransferPosition(leg.arrivalPosition)
-		]) : null
+		let transferPosition = null
+		if (details && 'number' === typeof leg.arrivalPosition) {
+			transferPosition = h('div', {
+				className: cls + 'transfer-position'
+			}, [
+				renderTransferPosition(leg.arrivalPosition)
+			])
+		}
 
 		return h('li', {
 			className: cls + 'leg',
