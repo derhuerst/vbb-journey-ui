@@ -45,6 +45,29 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 		return renderLine(leg, i, details)
 	}
 
+	const renderCycle = (leg) => {
+		let res = null
+		if (leg.alternatives) {
+			let d = Infinity
+			for (let a of leg.alternatives) {
+				if (a.line.id !== leg.line.id) continue
+				const aD = new Date(a.when)
+				if (aD < d) d = aD
+			}
+			res = h('span', {}, [
+				'also at ', formatTime(d)
+			])
+		} else if (leg.cycle && 'number' === typeof leg.cycle.min) {
+			const c = leg.cycle
+			let msg = 'every ' + ms(c.min * 1000)
+			if ('number' === typeof c.max && c.max !== c.min) {
+				msg += '–' + ms(c.max * 1000)
+			}
+			res = h('span', {}, msg)
+		}
+		return res
+	}
+
 	const renderLine = (leg, i, details) => {
 		const line = leg.line
 		let color = {}
@@ -108,8 +131,14 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 			h('div', {
 				className: cls + 'details'
 			}, [
-				h('abbr', {title: ms(duration, {long: true})}, [ms(duration)]),
-				', ',
+				h('abbr', {
+					title: ms(duration, {long: true})
+				}, [
+					ms(duration) + ' ride'
+				]),
+				' · ',
+				renderCycle(leg),
+				' · ',
 				nrOfPassed,
 				transferPosition
 			]),
