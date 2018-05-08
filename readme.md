@@ -37,9 +37,12 @@ const formatTime = (when) => {
 }
 
 const formatDelay = (delay) => {
-	if (delay === 0) return null
-	if (delay < 0) return '-' + ms(-delay * 1000)
-	return '+' + ms(delay * 1000)
+	if (delay === 0) return null // todo: show +0
+	const color = Math.abs(delay) >= 30 ? '#c0392b' : '#27ae60'
+	const text = delay < 0
+		? '-' + ms(-delay * 1000)
+		: '+' + ms(delay * 1000)
+	return h('span', {style: {color}}, [text])
 }
 
 const renderJourney = createRenderJourney(formatTime, formatDelay, {})
