@@ -36,7 +36,7 @@
 		"luxon": "^0.4.0",
 		"tap-min": "^1.2.1",
 		"tape": "^4.6.3",
-		"vbb-client": "^3.0.1",
+		"vbb-hafas": "^5.0.1",
 		"virtual-dom-stringify": "^3.0.1"
 	},
 	"scripts": {

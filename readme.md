@@ -25,7 +25,7 @@ npm install vbb-journey-ui
 ```js
 const {DateTime} = require('luxon')
 const ms = require('ms')
-const vbb = require('vbb-client')
+const createVbbClient = require('vbb-hafas')
 const createRenderJourney = require('vbb-journey-ui')
 const toString = require('virtual-dom-stringify')
 
@@ -47,7 +47,8 @@ const formatDelay = (delay) => {
 
 const renderJourney = createRenderJourney(formatTime, formatDelay, {})
 
-vbb.journeys('900000003201', '900000024101', {results: 1})
+const vbb = createVbbClient('my-awesome-program')
+vbb.journeys('900000003201', '900000024101', {results: 1, stopovers: true})
 .then((journeys) => {
 	const tree = renderJourney(journeys[0])
 	console.log(toString(tree))

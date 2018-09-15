@@ -3,6 +3,7 @@
 const {DateTime} = require('luxon')
 const ms = require('ms')
 const h = require('virtual-dom/h')
+const createVbbClient = require('vbb-hafas')
 const toString = require('virtual-dom-stringify')
 
 const createRenderJourney = require('.')
@@ -49,6 +50,8 @@ const renderPage = (body) => {
 		h('body', {}, [body])
 	])
 }
+
+const vbb = createVbbClient('vbb-journey-ui example')
 
 vbb.journeys('900000100001', '900000100013', {results: 1, stopovers: true})
 .then(([journey]) => {
