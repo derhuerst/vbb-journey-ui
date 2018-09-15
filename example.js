@@ -50,7 +50,7 @@ const renderPage = (body) => {
 	])
 }
 
-vbb.journeys('900000100001', '900000100013', {results: 1, passedStations: true})
+vbb.journeys('900000100001', '900000100013', {results: 1, stopovers: true})
 .then(([journey]) => {
 	const page = renderPage(renderJourney(journey, range(journey.legs.length)))
 	console.log('<!DOCTYPE html>\n' + toString(page))

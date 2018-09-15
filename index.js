@@ -1,7 +1,7 @@
 'use strict'
 
 const h = require('virtual-dom/h')
-const colors = require('vbb-util/lines/colors')
+const colors = require('vbb-line-colors')
 const products = require('vbb-util/products')
 const ms = require('ms')
 
@@ -92,17 +92,17 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 			}
 		}
 
-		const passed = []
+		const _stopovers = []
 		if (details) {
-			for (let stopover of leg.passed.slice(1, -1)) {
-				passed.push(h('li', {}, renderPassed(stopover.station, color.bg)))
+			for (let stopover of leg.stopovers.slice(1, -1)) {
+				_stopovers.push(h('li', {}, renderStopover(stopover.stop, color.bg)))
 			}
 		}
 
-		const l = leg.passed.length
+		const l = leg.stopovers.length
 		const label = (l - 1) + ' ' + (l === 2 ? 'stop' : 'stops')
 
-		const nrOfPassed = leg.passed ? h('span', {
+		const nrOfStopovers = leg.stopovers ? h('span', {
 			className: cls + 'link',
 			'ev-click': details ? () => actions.hideLegDetails(i) : () => actions.showLegDetails(i)
 		}, label) : null
@@ -148,33 +148,33 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 				' · ',
 				renderCycle(leg),
 				' · ',
-				nrOfPassed,
+				nrOfStopovers,
 				transferPosition
 			]),
-			passed.length > 0 ? h('ul', {
+			_stopovers.length > 0 ? h('ul', {
 				className: cls + 'details'
-			}, passed) : null
+			}, _stopovers) : null
 		])
 	}
 
-	const renderPassed = (station, color) =>
+	const renderStopover = (stop, color) =>
 		h('div', {
-			className: cls + 'link ' + cls + 'passed',
+			className: cls + 'link ' + cls + 'stopover',
 			style: {borderBottomColor: color},
-			'ev-click': () => actions.selectStation(station.id)
-		}, station.name)
+			'ev-click': () => actions.selectStation(stop.id)
+		}, stop.name)
 
-	const renderStation = (station) =>
+	const renderStop = (stop) =>
 		h('div', {
 			className: cls + 'link',
-			'ev-click': () => actions.selectStation(station.id)
-		}, station.name)
+			'ev-click': () => actions.selectStation(stop.id)
+		}, stop.name)
 
-	const renderStopover = (station, departure, delay) => {
+	const renderStopoverTime = (stop, departure, delay) => {
 		const els = [
 			h('div', {
 				className: cls + 'name'
-			}, [renderStation(station)])
+			}, [renderStop(stop)])
 		]
 
 		if ('number' === typeof delay) {
@@ -205,7 +205,7 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 			const leg = journey.legs[i]
 
 			legs.push(
-				renderStopover(leg.origin, leg.departure, leg.departureDelay),
+				renderStopoverTime(leg.origin, leg.departure, leg.departureDelay),
 				renderMode(leg, i, detailsFor.includes(i))
 			)
 
@@ -216,7 +216,7 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 				nextLeg.origin.id !== leg.destination.id
 			)
 			if (renderDest) {
-				legs.push(renderStopover(leg.destination, leg.arrival, leg.arrivalDelay))
+				legs.push(renderStopoverTime(leg.destination, leg.arrival, leg.arrivalDelay))
 			}
 		}
 
