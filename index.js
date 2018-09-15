@@ -157,17 +157,22 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 		])
 	}
 
+	const selectStop = (stop) => {
+		const stationId = stop.station ? stop.station.id : null
+		return actions.selectStop(stop.id, stationId)
+	}
+
 	const renderStopover = (stop, color) =>
 		h('div', {
 			className: cls + 'link ' + cls + 'stopover',
 			style: {borderBottomColor: color},
-			'ev-click': () => actions.selectStation(stop.id)
+			'ev-click': () => selectStop(stop)
 		}, stop.name)
 
 	const renderStop = (stop) =>
 		h('div', {
 			className: cls + 'link',
-			'ev-click': () => actions.selectStation(stop.id)
+			'ev-click': () => selectStop(stop)
 		}, stop.name)
 
 	const renderStopoverTime = (stop, departure, delay) => {

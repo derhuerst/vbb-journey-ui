@@ -70,7 +70,7 @@ renderJourney(journey, [detailsFor], [actions]) => virtualDomTree
 
 - `actions.hideLegDetails(i)`
 - `actions.showLegDetails(i)`
-- `actions.selectStation(id)`
+- `actions.selectStop(stopId, [stationId])`
 
 `journey` must be a [*Friendly Public Transport Format* `1.0.1` `journey` object](https://github.com/public-transport/friendly-public-transport-format/blob/1.0.1/spec/readme.md#journey).
 
