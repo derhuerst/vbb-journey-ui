@@ -27,6 +27,7 @@
 	"dependencies": {
 		"global": "4.3.2",
 		"insert-styles": "^1.2.1",
+		"lodash": "^4.17.11",
 		"ms": "^2.1.1",
 		"vbb-line-colors": "^1.0.0",
 		"vbb-util": "^0.10.1",

@@ -4,6 +4,7 @@ const h = require('virtual-dom/h')
 const colors = require('vbb-line-colors')
 const products = require('vbb-util/products')
 const ms = require('ms')
+const flatten = require('lodash/flatten')
 
 const renderTransferPosition = require('./lib/render-transfer-position')
 
@@ -109,6 +110,8 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 
 		const duration = new Date(leg.arrival) - new Date(leg.departure)
 
+		const cycle = renderCycle(leg)
+
 		let transferPosition = null
 		if (details && 'number' === typeof leg.arrivalPosition) {
 			transferPosition = h('div', {
@@ -139,18 +142,17 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 			]) : null,
 			h('div', {
 				className: cls + 'details'
-			}, [
+			}, flatten([
 				h('abbr', {
 					title: ms(duration, {long: true})
 				}, [
 					ms(duration) + ' ride'
 				]),
 				' · ',
-				renderCycle(leg),
-				' · ',
+				cycle ? [cycle, ' · '] : [],
 				nrOfStopovers,
 				transferPosition
-			]),
+			])),
 			_stopovers.length > 0 ? h('ul', {
 				className: cls + 'details'
 			}, _stopovers) : null

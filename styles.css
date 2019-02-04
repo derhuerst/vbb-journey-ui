@@ -124,12 +124,12 @@
 	max-height: 2.2em;
 }
 
-.vbb-journey-ui-leg .vbb-journey-ui-details .vbb-journey-ui-passed {
+.vbb-journey-ui-leg .vbb-journey-ui-details .vbb-journey-ui-stopover {
 	position: relative;
 	margin-left: -.25em;
 	border-bottom-color: #999;
 }
-.vbb-journey-ui-leg .vbb-journey-ui-details .vbb-journey-ui-passed::before {
+.vbb-journey-ui-leg .vbb-journey-ui-details .vbb-journey-ui-stopover::before {
 	content: '';
 	position: absolute;
 	display: block;
