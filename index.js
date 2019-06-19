@@ -83,7 +83,7 @@ const setup = (formatTime, formatDelay, actions = {}) => {
 			symbol = h('img', {
 				className: cls + 'product',
 				alt: line.product,
-				src: `https://cdn.rawgit.com/derhuerst/vbb-logos/v2/${line.product}.svg`
+				src: `https://raw.githubusercontent.com/derhuerst/vbb-logos/v2/${line.product}.svg`
 			})
 
 			if (colors[line.product] && colors[line.product][line.name]) {
