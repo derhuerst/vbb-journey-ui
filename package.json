@@ -25,7 +25,7 @@
 		"node": ">=6"
 	},
 	"dependencies": {
-		"global": "4.3.2",
+		"global": "4.4.0",
 		"insert-styles": "^1.2.1",
 		"lodash": "^4.17.11",
 		"ms": "^2.1.1",
