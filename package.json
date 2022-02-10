@@ -34,7 +34,7 @@
 		"virtual-dom": "^2.1.1"
 	},
 	"devDependencies": {
-		"luxon": "^0.4.0",
+		"luxon": "^0.5.8",
 		"tap-min": "^1.2.1",
 		"tape": "^4.6.3",
 		"vbb-hafas": "^5.0.1",
